@@ -16,7 +16,15 @@ function setup() {
 
 function draw() {
   background("white");
-  image(img, windowWidth/2, windowHeight/2, 100, 150);
+  drawCards();
+}
+
+function drawCards(){
+  for (let x = 100; x < windowWidth - 100; x+= 100) {
+    for (let y = 100; y < windowHeight - 150; y+= 150) {
+      image(img, x, y, 100, 150);
+    }
+  }
 }
 
 function windowResized() {
