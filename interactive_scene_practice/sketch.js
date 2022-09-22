@@ -4,10 +4,11 @@
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
-let img;
+let cardImage;
+let scalar = 0.15;
 
 function preload(){
-  img = loadImage("card_back_purple.png");
+  cardImage = loadImage("card_back_purple.png");
 }
 
 function setup() {
@@ -20,9 +21,12 @@ function draw() {
 }
 
 function drawCards(){
-  for (let x = 100; x < windowWidth - 100; x+= 100) {
-    for (let y = 100; y < windowHeight - 150; y+= 150) {
-      image(img, x, y, 100, 150);
+  let cardWidth = cardImage.width*scalar;
+  let cardHeight = cardImage.height*scalar;
+  let distanceFromEdge = 100;
+  for (let x = distanceFromEdge; x < windowWidth - cardWidth; x+= cardWidth) {
+    for (let y = distanceFromEdge; y < windowHeight - cardHeight; y+= cardHeight) {
+      image(cardImage, x, y, cardWidth, cardHeight);
     }
   }
 }
