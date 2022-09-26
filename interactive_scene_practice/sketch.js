@@ -4,7 +4,7 @@
 //
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
-let cardImage;
+let cardImage, x, y, cardWidth, cardHeight, distanceFromEdge;
 let scalar = 0.15;
 
 function preload(){
@@ -21,11 +21,11 @@ function draw() {
 }
 
 function drawCards(){
-  let cardWidth = cardImage.width*scalar;
-  let cardHeight = cardImage.height*scalar;
-  let distanceFromEdge = 100;
-  for (let x = distanceFromEdge; x < windowWidth - cardWidth; x+= cardWidth) {
-    for (let y = distanceFromEdge; y < windowHeight - cardHeight; y+= cardHeight) {
+  cardWidth = cardImage.width*scalar;
+  cardHeight = cardImage.height*scalar;
+  distanceFromEdge = 100;
+  for (x = distanceFromEdge; x < windowWidth - cardWidth; x+= cardWidth) {
+    for (y = distanceFromEdge; y < windowHeight - cardHeight; y+= cardHeight) {
       image(cardImage, x, y, cardWidth, cardHeight);
     }
   }
