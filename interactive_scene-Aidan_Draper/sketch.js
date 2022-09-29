@@ -5,10 +5,11 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let cardImage, scalar, x, y, cardWidth, cardHeight;
+let theImage, cardImage, otherSide, scalar, x, y, cardWidth, cardHeight;
 
 function preload(){
   cardImage = loadImage("card_back_purple.png");
+  otherSide = loadImage("playing_card.png");
 }
 
 function setup() {
@@ -16,6 +17,7 @@ function setup() {
   scalar = 0.15;
   cardWidth = cardImage.width*scalar;
   cardHeight = cardImage.height*scalar;
+  theImage = cardImage;
   x = 10;
   y = 10;
 }
@@ -26,7 +28,13 @@ function draw() {
 }
 
 function drawCard(){
-  image(cardImage, x, y, cardWidth, cardHeight);
+  image(theImage, x, y, cardWidth, cardHeight);
+}
+
+function mousePressed(){
+  if (mouseX > x && mouseX <= cardWidth && mouseY > y && mouseY >= cardHeight){
+    theImage = otherSide;
+  }
 }
 
 function windowResized() {
