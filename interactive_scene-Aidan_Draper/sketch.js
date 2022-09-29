@@ -13,8 +13,11 @@ function preload(){
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  scalar = 0.15;
   cardWidth = cardImage.width*scalar;
   cardHeight = cardImage.height*scalar;
+  x = 10;
+  y = 10;
 }
 
 function draw() {
@@ -23,5 +26,9 @@ function draw() {
 }
 
 function drawCard(){
+  image(cardImage, x, y, cardWidth, cardHeight);
+}
 
+function windowResized() {
+  setup();
 }
