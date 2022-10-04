@@ -5,39 +5,45 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let theImage, cardImage, otherSide, scalar, x, y, cardWidth, cardHeight;
+let state = "start";
+let xCenter, yCenter, startWidth, startHeight, card, backOfCard;
+let scalar = 0.1;
 
 function preload(){
-  cardImage = loadImage("card_back_purple.png");
-  otherSide = loadImage("playing_card.png");
+  backOfCard = loadImage("cardBackSide");
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  scalar = 0.15;
-  cardWidth = cardImage.width*scalar;
-  cardHeight = cardImage.height*scalar;
-  theImage = cardImage;
-  x = 10;
-  y = 10;
+  xCenter = width/2;
+  yCenter = height/2;
+  startWidth = width/8;
+  startHeight = height/8;
 }
 
-function draw() {
+function draw(){
   background(220);
-  drawCard();
-}
-
-function drawCard(){
-  image(theImage, x, y, cardWidth, cardHeight);
-}
-
-function mousePressed(){
-  if (mouseX > x && mouseX <= cardWidth && mouseY > y && mouseY >= cardHeight){
-    theImage = otherSide;
+  if (state === "start") {
+    startScreen();
+  }
+  if (state === "main") {
+    placeCards();
   }
 }
 
-function windowResized() {
-  setup();
+function startScreen(){
+  if (mouseInRect()) {
+    fill("grey");
+  }
+  else {
+    fill("black");
+  }
+  rect(xCenter, yCenter, startWidth, startHeight);
+  fill("white");
+  textSize(startWidth);
+  text("start", xCenter, yCenter);
 }
 
+function mouseInRect(left, right, top, bottom){
+  return mouseX >= left && mouseX <= right && mouseY >= top && mouseY <= bottom;
+}
