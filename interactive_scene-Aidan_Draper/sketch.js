@@ -18,6 +18,7 @@ let state = "start";
 let xCenter, yCenter;
 
 //start Screen variables
+let tSize = 1;
 let startButtonWidth, startButtonHeight;
 
 function preload(){
@@ -53,6 +54,12 @@ function draw(){
   generalBackground();
   if (state === "start") {
     startScreen();
+  }
+  else if (state === "instructions") {
+    instructions();
+  }
+  else if (state === "main") {
+    game();
   }
 }
 
@@ -103,10 +110,50 @@ function bounceIfNeeded() {
 }
 
 function startScreen() {
+  startText();
+  animateStartText();
+  if (mouseInRect(xCenter - startButtonWidth/2, xCenter + startButtonWidth/2, yCenter + height/6 - startButtonHeight/2, yCenter + height/6 + startButtonHeight/2)) {
+    fill("grey");
+  }
+  else {
+    fill("black");
+  }
+  rect(xCenter, yCenter + height/6, startButtonWidth, startButtonHeight);
   fill("white");
-  textSize(width/16);
+  textSize(width*0.04);
+  text("start", xCenter, yCenter + height/6);
+
+}
+
+function startText() {
+  fill("yellow");
+  strokeWeight(3);
+  ellipse(xCenter, yCenter - height/4, tSize*8, tSize*3);
+  textSize(tSize);
+  fill("black");
   textFont("cursive");
   text("Memory Match", xCenter, yCenter - height/4);
+}
+
+function animateStartText() {
+  if(tSize < width/20) {
+    tSize ++;
+  }
+}
+
+function instructions() {
+  fill("black");
+  rect(xCenter, yCenter, width/3, height/2);
+  fill("white");
+  textFont("cursive");
+  textSize(width/18);
+  text("Instructions", xCenter, height* 0.35);
+  textSize(width/42);
+  text("By using the letter keys to select cards, try to match as many pairs as possible in the turns allowed", xCenter, height*0.55, width/3, height/2);
+}
+
+function game() {
+  
 }
 
 //identifying if the mouse is touching/inside of a rectangle
@@ -117,8 +164,11 @@ function mouseInRect(left, right, top, bottom){
 //identifying if the mouse was pressed
 function mousePressed() {
   //starting the game if the mouse was pressed in the start button
-  if (state === "start" && mouseInRect(xCenter - startButtonWidth/2, xCenter + startButtonWidth/2, yCenter - startButtonHeight/2, yCenter + startButtonHeight/2)){
+  if (state === "start" && mouseInRect(xCenter - startButtonWidth/2, xCenter + startButtonWidth/2, yCenter + height/6 - startButtonHeight/2, yCenter + height/6 + startButtonHeight/2)){
     state = "instructions";
+  }
+  else if (state === "instructions") {
+    state = "main";
   }
 }
 
