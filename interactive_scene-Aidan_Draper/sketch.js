@@ -5,7 +5,7 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-//background element variables\
+//background element variables
 let questionMark, x, y, x2, y2, questionMarkWidth, questionMarkHeight;
 let questionMarkScalar = 0.25;
 let dx = 4;
@@ -61,6 +61,7 @@ function setup() {
 
   //setting up card scalar size
   cardScalar = 0.55/width*height;
+
 }
 
 function draw() {
