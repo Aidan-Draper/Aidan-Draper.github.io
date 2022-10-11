@@ -21,8 +21,8 @@ let xCenter, yCenter;
 let titleSize = 1;
 
 //main game variables
-let a, b, c, d, e, f, g, h, i, j, k, l, cardScalar, backOfCard, heartCard, lightningCard, plusCard, starCard, treeCard, waterDropCard;
-let tries = 8;
+let cardScalar, backOfCard, heartCard, lightningCard, plusCard, starCard, treeCard, waterDropCard;
+let tries = 6;
 let pairsMade = 0;
 
 function preload() {
