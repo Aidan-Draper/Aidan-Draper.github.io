@@ -249,8 +249,8 @@ function animateStartText() {
 //Displaying the instructions to the game
 function instructions() {
   createRectangle("black", xCenter, yCenter, width / 3, height / 2);
-  writeText("white", "cursive", width / 18, "Instructions", xCenter, height * 0.35);
-  writeText("white", "cursive", width / 42, "Make pairs by flipping 2 cards at a time with the mouse. Use the R key to restart and the I key to view the instructions", xCenter, height * 0.55, width / 3, height / 2);
+  writeText("white", "cursive", width / 18, "Instructions", xCenter, height * 0.33);
+  writeText("white", "cursive", width / 42, "Make pairs by flipping 2 cards at a time with the mouse and GO SLOW. Use the R key to restart and the I key to view the instructions", xCenter, height * 0.56, width / 3, height / 2);
 }
 
 //Main game
