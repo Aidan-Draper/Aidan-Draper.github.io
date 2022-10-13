@@ -157,7 +157,7 @@ function mousePressed() {
 //Identifying if a key is pressed, and if it is one that we have associated controles and executing those controles
 function keyPressed() {
   if (state ==="main" && keyCode === 82) {
-    restart("Good luck this");
+    restart("Good luck this time");
   }
   else if (state === "main" && keyCode === 73){
     section.classList.add("hidden");
