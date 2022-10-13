@@ -8,7 +8,7 @@
 //Grab a couple of things
 const section = document.querySelector("section");
 const playerLivesCount = document.querySelector("span");
-let playerLives = 6;
+let playerLives = 5;
 
 //Link text
 playerLivesCount.textContent = playerLives;
@@ -37,12 +37,13 @@ const cardGenerator = () => {
   cardData.forEach((element, index) => {
     const card = document.createElement("div");
     const face = document.createElement("img");
-    const back = document.createElement("div");
+    const back = document.createElement("img");
     card.classList = "card";
     face.classList = "face";
     back.classList = "back";
     //Attach the info to the cards
     face.src = element.imgSrc;
+    back.src = "backOfCard.png";
     card.setAttribute("name", element.name);
     //Attach the cards to the section
     section.appendChild(card);
@@ -78,13 +79,17 @@ const checkCards = (e) => {
       playerLives--;
       playerLivesCount.textContent = playerLives;
       if (playerLives === 0) {
-        restart("Try again");
+        setTimeout(() => {
+          restart("Try again");
+        }, 1000);
       }
     }
   }
   //Run a check to see if you won
   if(toggleCard.length === 12) {
-    restart("You won");
+    setTimeout(() => {
+      restart("You won");
+    }, 1000);
   }
 };
 
@@ -103,7 +108,7 @@ const restart = (text) => {
       cards[index].setAttribute("name", element.name);
     }, 1000);
   });
-  playerLives = 6;
+  playerLives = 5;
   playerLivesCount.textContent = playerLives;
   setTimeout(() => window.alert(text), 100);
 
@@ -112,6 +117,7 @@ const restart = (text) => {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
+  imageMode(CENTER);
   //shuffle cards
   cardData = shuffle(getData());
 
