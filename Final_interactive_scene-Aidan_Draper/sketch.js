@@ -3,7 +3,7 @@
 // October 13, 2022
 //
 // Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// - To take this project above and beyond, not only did I make each size variable in accordance with the tab size, so that this programme runs in almost any tab size, but I also researched how to use the html and css tools to my advantage in this game by watching tutorials and fixing issues and errors with the help of the w3schools reference.
 
 
 //Creating global variables to use throughout
@@ -80,6 +80,7 @@ function setup() {
   cardData = shuffle(getData());
 }
 
+//constantly running code depending on the state
 function draw() {
   if (state !== "main") {
     generalBackground();
@@ -153,6 +154,7 @@ function mousePressed() {
   }
 }
 
+//Identifying if a key is pressed, and if it is one that we have associated controles and executing those controles
 function keyPressed() {
   if (state ==="main" && keyCode === 82) {
     restart("Good luck this");
@@ -252,19 +254,23 @@ function instructions() {
 }
 
 //Main game
+//Create the Lives at the bottom of the screeen
 function lifeBox() {
   createRectangle(boxColor, xCenter, height/10, width/5, height/10);
   writeText("black", "cursive", width/50, "Lives: " + playerLives, xCenter, height/10, width/5, height/10);
 }
 
+//Running all of the card code to create the game
 const runGame = () => {
-  background("#4c4cb8");
-  section.classList.remove("hidden");
-  //Generate HTML
+  background("#4c4cb8");//set background
+  section.classList.remove("hidden");//unhiddinng the section part of the html so that we can use it
+  //Generate HTML/Create a card with each element of the card list
   cardData.forEach((element, index) => {
+    //Making card with front and back face
     const card = document.createElement("div");
     const face = document.createElement("img");
     const back = document.createElement("img");
+    //Giving them a class to identify when it's flipped
     card.classList = "card";
     face.classList = "face";
     back.classList = "back";
@@ -276,7 +282,7 @@ const runGame = () => {
     section.appendChild(card);
     card.appendChild(face);
     card.appendChild(back);
-
+    //Checking if the card is clicked and flipping it
     card.addEventListener("click", (e) =>{
       card.classList.toggle("toggleCard");
       checkCards(e);
@@ -284,29 +290,34 @@ const runGame = () => {
   });
 };
 
-//Check cards
+//Checking if the cards got flipped and what to do about it
 const checkCards = (e) => {
   const clickedCard = e.target;
   clickedCard.classList.add("flipped");
   const flippedCards = document.querySelectorAll(".flipped");
   const toggleCard = document.querySelectorAll(".toggleCard");
   //Logic
+  //Seeing if two were flipped and checking if they match
   if (flippedCards.length === 2) {
     if (flippedCards[0].getAttribute("name") === flippedCards[1].getAttribute("name")){
       flippedCards.forEach(card => {
+        //if they match, make them unflippable
         card.classList.remove("flipped");
         card.style.pointerEvents = "none";
       });
     }
     else {
+      //flipping the unmatched pair back
       flippedCards.forEach(card => {
         card.classList.remove("flipped");
-        setTimeout(() => card.classList.remove("toggleCard"), 1000);
+        setTimeout(() => card.classList.remove("toggleCard"), 1500);
       });
+      //Making the lives red to warn you that you're low on lives
       playerLives--;
       if (playerLives < 3) {
         boxColor = "red";
       }
+      //restarting after the player loses
       if (playerLives === 0) {
         setTimeout(() => {
           restart("Try again");
@@ -314,7 +325,7 @@ const checkCards = (e) => {
       }
     }
   }
-  //Run a check to see if you won
+  //Run a check to see if you won and restarting if you did
   if(toggleCard.length === 12) {
     setTimeout(() => {
       restart("You won");
@@ -322,23 +333,27 @@ const checkCards = (e) => {
   }
 };
 
-//Restart
+//Restart by resetting all variables and shuffling the deck
 const restart = (text) => {
   cardData = shuffle(getData());
   let faces = document.querySelectorAll(".face");
   let cards = document.querySelectorAll(".card");
   section.style.pointerEvents = "none";
   cardData.forEach((element, index) => {
-    cards[index].classList.remove("toggleCard");
-    //Randomize
+    //Waiting until the other stuff is finnished before making the cards clickable
+    setTimeout(() => {
+      cards[index].classList.remove("toggleCard");
+    }, 100);
     setTimeout(() => {
       cards[index].style.pointerEvents = "all";
       faces[index].src = element.imgSrc;
       cards[index].setAttribute("name", element.name);
     }, 1000);
   });
+  //Resetting life box
   playerLives = 5;
   boxColor = "aquamarine";
+  //Giving the given window alert
   setTimeout(() => window.alert(text), 100);
 
 };
