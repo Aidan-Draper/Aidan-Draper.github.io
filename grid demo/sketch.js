@@ -2,7 +2,7 @@
 // Aidan Draper
 // october 25, 2022
 
-let gridSize = [3, 3];
+let gridSize = [69,69];
 let grid = [];
 for(let i = 0; i<gridSize[0]; i++){
   let innerGrid = [];
