@@ -14,6 +14,7 @@ let sudoku = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
   generateRandomBoxes (unmixedBox, sudoku);
+  textAlign(CENTER, CENTER);
   console.log(sudoku);//checking progress
   if (width >= height) {
     cellSideLength = height/ROWS;
@@ -34,11 +35,13 @@ function generateRandomBoxes (box, grid){
   });
 }
 
+//displaying each list in a row
 function displayGrid(grid) {
   for (let y = 0; y<ROWS; y++) {
     for (let x = 0; x<COLS; x++) {
       rect(x*cellSideLength, y*cellSideLength, cellSideLength, cellSideLength);
-      text(grid[y][x], x*cellSideLength, y*cellSideLength);
+      textSize(cellSideLength/4);
+      text(grid[y][x], x*cellSideLength + cellSideLength/2, y*cellSideLength +cellSideLength/2);
     }
   }
 }
