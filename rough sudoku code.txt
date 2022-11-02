@@ -1,0 +1,22 @@
+
+function checkArray(array){
+  let cleanArray = true;
+  array.forEach((element, index) =>{
+    array.forEach((item, place) =>{
+      if (element === item && index!== place){
+        cleanArray = false;
+      }
+    });
+  });
+  return cleanArray;
+}
+
+function check2dArray(grid){
+  let clean = false;
+  grid.forEach((element) =>{
+    if(checkArray(element) === true){
+      clean = true;
+    }
+  });
+  return clean;
+}
