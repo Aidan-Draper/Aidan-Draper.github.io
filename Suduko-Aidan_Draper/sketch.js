@@ -84,17 +84,16 @@ function obtainColumnArrays(grid) {
 }
 
 function displayGrid(grid) {
-  let tempOuterArray = [];
+  for (let y = 0; y<grid.length/3; y++) {
+    for (let x = 0; x<grid.length/3; x++) {
+      image(borderPaper, x*cellSideLength*3, y*cellSideLength*3, cellSideLength*3, cellSideLength*3);
+    }
+  }
   for (let y = 0; y<grid.length; y++) {
     for (let x = 0; x<grid.length; x++) {
       image(paper, x*cellSideLength, y*cellSideLength, cellSideLength, cellSideLength);
       textSize(cellSideLength/4);
       text(grid[y][x], x*cellSideLength + cellSideLength/2, y*cellSideLength +cellSideLength/2);
-    }
-  }
-  for (let y = 0; y<grid.length/3; y++) {
-    for (let x = 0; x<grid.length/3; x++) {
-      image(borderPaper, x*cellSideLength*3, y*cellSideLength*3, cellSideLength*3, cellSideLength*3);
     }
   }
 }
