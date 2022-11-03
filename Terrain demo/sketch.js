@@ -1,5 +1,5 @@
 //Terrain generation
-//Draper
+//Aidan Draper
 //Oct 21, 2022
 
 let theHeights = [];
