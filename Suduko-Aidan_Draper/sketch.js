@@ -9,12 +9,12 @@ let cellSideLength;
 let unmixedBox = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 let sudoku = [];
 let boxArrayList, columnArrayList;
-let paper;
+let paper, borderPaper;
 
 function preload() {
 
   paper = loadImage("paper.jpg");
-
+  borderPaper = loadImage("borderPaper.jpg");
 }
 
 function setup() {
@@ -90,6 +90,11 @@ function displayGrid(grid) {
       image(paper, x*cellSideLength, y*cellSideLength, cellSideLength, cellSideLength);
       textSize(cellSideLength/4);
       text(grid[y][x], x*cellSideLength + cellSideLength/2, y*cellSideLength +cellSideLength/2);
+    }
+  }
+  for (let y = 0; y<grid.length/3; y++) {
+    for (let x = 0; x<grid.length/3; x++) {
+      image(borderPaper, x*cellSideLength*3, y*cellSideLength*3, cellSideLength*3, cellSideLength*3);
     }
   }
 }
