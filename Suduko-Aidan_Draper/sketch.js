@@ -12,9 +12,8 @@ let boxArrayList, columnArrayList;
 let paper, borderPaper;
 
 function preload() {
-
   paper = loadImage("paper.jpg");
-  borderPaper = loadImage("borderPaper.jpg");
+  borderPaper = loadImage("borderPaper.png");
 }
 
 function setup() {
@@ -83,18 +82,30 @@ function obtainColumnArrays(grid) {
   return tempOuterArray;
 }
 
+function swapNumbers(array, index1, index2){
+  let originalIndex1Value = array[index1];
+  array[index1] = array[index2];
+  array[index2] = originalIndex1Value;
+  return array;
+}
+
 function displayGrid(grid) {
-  for (let y = 0; y<grid.length/3; y++) {
-    for (let x = 0; x<grid.length/3; x++) {
+  for (let y = 0; y<grid.length; y++) {
+    for (let x = 0; x<grid.length; x++) {
+      image(paper, x*cellSideLength, y*cellSideLength, cellSideLength, cellSideLength);
+    }
+  }
+  for (let y = 0; y<3; y++) {
+    for (let x = 0; x<3; x++) {
       image(borderPaper, x*cellSideLength*3, y*cellSideLength*3, cellSideLength*3, cellSideLength*3);
     }
   }
   for (let y = 0; y<grid.length; y++) {
     for (let x = 0; x<grid.length; x++) {
-      image(paper, x*cellSideLength, y*cellSideLength, cellSideLength, cellSideLength);
       textSize(cellSideLength/4);
       text(grid[y][x], x*cellSideLength + cellSideLength/2, y*cellSideLength +cellSideLength/2);
     }
   }
 }
+
 
