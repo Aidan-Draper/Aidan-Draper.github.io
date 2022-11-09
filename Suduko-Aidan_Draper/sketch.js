@@ -82,6 +82,24 @@ function obtainColumnArrays(grid) {
   return tempOuterArray;
 }
 
+function checkNumberMultiples(array, index){
+  let numberMultiples = {amount: 0, firstIndex: index};
+  for(let i = 0; i<array.length; i++){
+    if(i !== index){//not counting self
+      if(array[i] === array[index]){//checking if it's the same number
+        if(numberMultiples.amount !== 1){//checking if it's the first or second multiple of that number in the array
+          numberMultiples.secondIndex = i;
+        }
+        else{
+          numberMultiples.thridIndex = i;
+        }
+        numberMultiples.amount ++;
+      }
+    }
+  }
+  return numberMultiples;
+}
+
 function swapNumbers(array, index1, index2){
   let originalIndex1Value = array[index1];
   array[index1] = array[index2];
