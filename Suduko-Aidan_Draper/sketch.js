@@ -5,10 +5,14 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
+//ideas
+//make functions to figure out the index in the row array given the one form the box or column arrays
+//make register number funtion
+
 let cellSideLength;
 let unmixedBox = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-let sudoku = [];
-let boxArrayList, columnArrayList;
+let rows = [];
+let boxes, columns;
 let paper, borderPaper;
 
 function preload() {
@@ -21,29 +25,29 @@ function setup() {
   textAlign(CENTER, CENTER);
 
   //generating a list of the 9 rows with each containing the numbers 1-9
-  generateRandomRows(sudoku, unmixedBox);
-  console.log(sudoku);//checking progress
+  generateRandomRows(rows, unmixedBox);
+  console.log(rows);//checking progress
 
   //obtaining the list of the 9 boxes and the numbers they each contain
-  boxArrayList = obtainBoxArrays(sudoku);
-  console.log(boxArrayList);//checking progress
+  boxes = obtainBoxArrays(rows);
+  console.log(boxes);//checking progress
 
   //obtaining the list of the 9 columns and the numbers they contain
-  columnArrayList = obtainColumnArrays(sudoku);
-  console.log(columnArrayList);//checking progress
+  columns = obtainColumnArrays(rows);
+  console.log(columns);//checking progress
   
-  //setting the sudoku size in accordance with the window size
+  //setting the rows size in accordance with the window size
   if (width >= height) {
-    cellSideLength = height/sudoku.length;
+    cellSideLength = height/rows.length;
   }
   else if (height >= width) {
-    cellSideLength = width/sudoku.length;
+    cellSideLength = width/rows.length;
   }
 }
 
 function draw() {
   background(220);
-  displayGrid(sudoku);
+  displayGrid(rows);
 }
 
 function generateRandomRows(grid, row){
