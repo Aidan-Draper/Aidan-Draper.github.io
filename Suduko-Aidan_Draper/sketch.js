@@ -59,9 +59,9 @@ function draw() {
 
 // make this look better
 function generateRandomRows(grid, row){
-  row.forEach((element, index) => {
+  for (let i = 0; i < row.length; i++){
     grid.push(shuffle(row));
-  });
+  }
 }
 
 function obtainBoxArrays(grid) {
@@ -223,10 +223,32 @@ function swapUntilNumberFound(y, x){
         swapUntilNumberFound(y, numberMultiples.secondIndex);
       }
       else{
-        timesRun = 0;
+        abandon();
       }
     }
   }
+}
+
+function abandon(){
+  console.log("abandoning");
+  rows = [];
+  //generating a list of the 9 rows with each containing the numbers 1-9
+  generateRandomRows(rows, unmixedList);
+  console.log(rows);//checking progress
+
+  //obtaining the list of the 9 boxes and the numbers they each contain
+  boxes = obtainBoxArrays(rows);
+  console.log(boxes);//checking progress
+
+  //obtaining the list of the 9 columns and the numbers they contain
+  columns = obtainColumnArrays(rows);
+  console.log(columns);//checking progress
+  
+  //sort the boxes
+  sortBoxes();
+
+  //sort the columns
+  sortColumns();
 }
 
 function columnSwapIfPossible(rowCoordinate, y, number){
