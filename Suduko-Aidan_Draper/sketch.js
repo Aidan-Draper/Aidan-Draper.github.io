@@ -172,7 +172,7 @@ function sortColumns(){
   }
   for (let y = 0; y < columns.length; y++){
     for (let x = 0; x < columns[y].length; x++){
-      recursion(y, x);
+      swapUntilNumberFound(y, x);
     }
   }
 }
@@ -203,7 +203,8 @@ function sortWithRecursion(y, x){
   }
 }
 
-function recursion(y, x){
+
+function swapUntilNumberFound(y, x){
   let numberMultiples = checkNumberMultiples(columns[y], x);
   let rowCoor = convertColumnCoordinateToRowCoordinate(y, numberMultiples.secondIndex);
   if (numberMultiples.amount === 0){
@@ -215,9 +216,15 @@ function recursion(y, x){
       columns = obtainColumnArrays(rows);
     }
     else{
-      rows[rowCoor.y] = swapNumbers(rows[rowCoor.y], rowCoor.x, rowCoor.x+1);
-      columns = obtainColumnArrays(rows);
-      recursion(y, numberMultiples.secondIndex);
+      if (timesRun < 19){
+        rows[rowCoor.y] = swapNumbers(rows[rowCoor.y], rowCoor.x, rowCoor.x+1);
+        columns = obtainColumnArrays(rows);
+        timesRun++;
+        swapUntilNumberFound(y, numberMultiples.secondIndex);
+      }
+      else{
+        timesRun = 0;
+      }
     }
   }
 }
