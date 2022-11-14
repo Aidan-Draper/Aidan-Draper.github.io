@@ -10,10 +10,11 @@
 //make register number funtion
 
 let cellSideLength;
-let unmixedBox = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+let unmixedList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 let rows = [];
 let boxes, columns;
 let paper, borderPaper;
+let timesRun = 0;
 
 function preload() {
   paper = loadImage("paper.jpg");
@@ -25,7 +26,7 @@ function setup() {
   textAlign(CENTER, CENTER);
 
   //generating a list of the 9 rows with each containing the numbers 1-9
-  generateRandomRows(rows, unmixedBox);
+  generateRandomRows(rows, unmixedList);
   console.log(rows);//checking progress
 
   //obtaining the list of the 9 boxes and the numbers they each contain
@@ -36,6 +37,12 @@ function setup() {
   columns = obtainColumnArrays(rows);
   console.log(columns);//checking progress
   
+  //sort the boxes
+  sortBoxes();
+
+  //sort the columns
+  sortColumns();
+
   //setting the rows size in accordance with the window size
   if (width >= height) {
     cellSideLength = height/rows.length;
@@ -50,6 +57,7 @@ function draw() {
   displayGrid(rows);
 }
 
+// make this look better
 function generateRandomRows(grid, row){
   row.forEach((element, index) => {
     grid.push(shuffle(row));
@@ -76,14 +84,32 @@ function obtainBoxArrays(grid) {
 
 function obtainColumnArrays(grid) {
   let tempOuterArray = [];
-  for(let i=0; i<grid.length; i++){
+  for(let y=0; y < grid.length; y++){
     let tempInnerArray = [];
-    for(let j=0; j<grid[i].length; j++){
-      tempInnerArray.push(grid[j][i]);
+    for(let x=0; x < grid[y].length; x++){
+      tempInnerArray.push(grid[x][y]);
     }
     tempOuterArray.push(tempInnerArray);
   }
   return tempOuterArray;
+}
+
+function convertBoxCoordinateToRowCoordinate(y, x){
+  let tempY = 3*Math.floor(y/3) + Math.floor(x/3);
+  let tempX = x % 3 + 3 * (y % 3);
+  return {y: tempY, x: tempX};
+}
+
+function convertColumnCoordinateToRowCoordinate(y, x){
+  let tempY = x;
+  let tempX = y;
+  return {y: tempY, x: tempX};
+}
+
+function convertColumnCoordinateToBoxCoordinate(y, x){
+  let tempY = Math.floor(y/3) + 3*Math.floor(x/3);
+  let tempX = y % 3 + 3 * (x % 3);
+  return {y: tempY, x: tempX};
 }
 
 function checkNumberMultiples(array, index){
@@ -95,7 +121,7 @@ function checkNumberMultiples(array, index){
           numberMultiples.secondIndex = i;
         }
         else{
-          numberMultiples.thridIndex = i;
+          numberMultiples.thirdIndex = i;
         }
         numberMultiples.amount ++;
       }
@@ -109,6 +135,130 @@ function swapNumbers(array, index1, index2){
   array[index1] = array[index2];
   array[index2] = originalIndex1Value;
   return array;
+}
+
+function sortBoxes(){
+  for (let y = 0; y < boxes.length; y++){
+    for (let x = 0; x < boxes[y].length; x++){
+      let numberMultiples = checkNumberMultiples(boxes[y], x);
+      if (numberMultiples.amount !== 0){
+        let rowCoor = convertBoxCoordinateToRowCoordinate(y, numberMultiples.firstIndex);
+        let rowCoor2 = convertBoxCoordinateToRowCoordinate(y, numberMultiples.secondIndex);
+        boxSwapIfPossible(rowCoor2, y);
+        //if all of the numbers in the multiples second indeces are already in the box, then you revert back to the first occurence of that number
+        if(rowCoor === rowCoor2){
+          boxSwapIfPossible(rowCoor, y);
+        }
+      }
+    }
+  } 
+}
+
+function boxSwapIfPossible(rowCoordinate, y){
+  for (let i = rowCoordinate.x + 1; i < rows[y].length; i++){
+    if (!boxes[y].includes(rows[rowCoordinate.y][i])){
+      rows[rowCoordinate.y] = swapNumbers(rows[rowCoordinate.y], rowCoordinate.x, i);
+      boxes = obtainBoxArrays(rows);
+      break;
+    }
+  }
+}
+
+function sortColumns(){
+  for (let y = 0; y < columns.length; y++){
+    for (let x = 0; x < columns[y].length; x++){
+      sortWithRecursion(y, x);
+    }
+  }
+  for (let y = 0; y < columns.length; y++){
+    for (let x = 0; x < columns[y].length; x++){
+      recursion(y, x);
+    }
+  }
+}
+
+function sortWithRecursion(y, x){
+  let numberMultiples = checkNumberMultiples(columns[y], x);
+  let rowCoor = convertColumnCoordinateToRowCoordinate(y, numberMultiples.firstIndex);
+  let rowCoor2 = convertColumnCoordinateToRowCoordinate(y, numberMultiples.secondIndex);
+  if(numberMultiples.amount !== 0){
+    if(rowCoor2.x%3 === 0){
+      columnSwapIfPossible(rowCoor2, y, 2);
+      if (rowCoor === rowCoor2){
+        columnSwapIfPossible(rowCoor, y, 2);
+      }
+    }
+    else if(rowCoor2.x%3 === 1){
+      columnSwapIfPossible(rowCoor2, y, 1);
+      if (rowCoor === rowCoor2){
+        columnSwapIfPossible(rowCoor, y, 1);
+      }
+    }
+
+    if (rowCoor === rowCoor2){
+      rows[rowCoor.y] = swapNumbers(rows[rowCoor.y], rowCoor.x+1);
+      columns = obtainColumnArrays(rows);
+      sortWithRecursion(y, x);
+    }
+  }
+}
+
+function recursion(y, x){
+  let numberMultiples = checkNumberMultiples(columns[y], x);
+  let rowCoor = convertColumnCoordinateToRowCoordinate(y, numberMultiples.secondIndex);
+  if (numberMultiples.amount === 0){
+    return "hazza";
+  }
+  else {
+    if (!columns[y].includes(rows[rowCoor.y][rowCoor.x+1])){
+      rows[rowCoor.y] = swapNumbers(rows[rowCoor.y], rowCoor.x, rowCoor.x+1);
+      columns = obtainColumnArrays(rows);
+    }
+    else{
+      rows[rowCoor.y] = swapNumbers(rows[rowCoor.y], rowCoor.x, rowCoor.x+1);
+      columns = obtainColumnArrays(rows);
+      recursion(y, numberMultiples.secondIndex);
+    }
+  }
+}
+
+function columnSwapIfPossible(rowCoordinate, y, number){
+  for (let i = rowCoordinate.x + 1; i <= rowCoordinate.x + number; i++){
+    if (!columns[y].includes(rows[rowCoordinate.y][i])){
+      rows[rowCoordinate.y] = swapNumbers(rows[rowCoordinate.y], rowCoordinate.x, i);
+      columns = obtainColumnArrays(rows);
+      break;
+    }
+  }
+}
+
+function isPerfect(){
+  let perfect = true;
+  for (let y = 0; y < rows.length; y++){
+    for (let x = 0; x < rows[y].length; x++){
+      let multiples = checkNumberMultiples(rows[y], x);
+      if (multiples.amount !== 0){
+        perfect = false;
+      }
+    }
+  }
+  for (let y = 0; y < boxes.length; y++){
+    for (let x = 0; x < boxes[y].length; x++){
+      let multiples = checkNumberMultiples(boxes[y], x);
+      if (multiples.amount !== 0){
+        perfect = false;
+      }
+    }
+  }
+  for (let y = 0; y < columns.length; y++){
+    for (let x = 0; x < columns[y].length; x++){
+      let multiples = checkNumberMultiples(columns[y], x);
+      if (multiples.amount !== 0){
+        perfect = false;
+      }
+    }
+  }
+  return perfect;
 }
 
 function displayGrid(grid) {
@@ -129,5 +279,3 @@ function displayGrid(grid) {
     }
   }
 }
-
-
