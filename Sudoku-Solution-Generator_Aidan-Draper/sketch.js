@@ -421,7 +421,7 @@ function swapUntilNumberFound(y, x){
 
     //otherwise as long as we haven't passed the infinite loop check, we swap the second indeces with the number to it's right and we run the function again with that number
     else{
-      if (timesRun < 109){//I chose 108 because theoretically every first or second row could get hung up until it finds the 18th number, that's 6 rows, 6x18 =108
+      if (timesRun < 108){//I chose 108 because theoretically every first or second row could get hung up until it finds the 18th number, that's 6 rows, 6x18 =108
         
         //swap with the number next to it and update the array
         rows[rowCoor.y] = swapNumbers(rows[rowCoor.y], rowCoor.x, rowCoor.x+1);

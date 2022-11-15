@@ -1,4 +1,4 @@
-// Walker OOP
+// Walker OOP Arrays
 // Aidan Draper
 // november 14, 2022
 //
@@ -10,7 +10,7 @@ class Walker {
     this.x = x;
     this.y = y;
     this.color = color(random(255), random(255), random(255));
-    this.speed = random(10);
+    this.speed = 5;
     this.radius = 2;
   }
 
@@ -37,24 +37,26 @@ class Walker {
   }
 }
 
-let john;
-let katherine;
-let aidan;
+let walkerArray = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background(220);
-  john = new Walker(width/2, height/2);
-  katherine = new Walker(width/3, height/3);
-  aidan = new Walker(width-150, height-150);
+  spawnWalker();
 }
 
 function draw() {
-  john.display();
-  katherine.display();
-  aidan.display();
+  for(let i = 0; i < walkerArray.length; i++){
+    walkerArray[i].move();
+    walkerArray[i].display();
+  }
 
-  john.move();
-  katherine.move();
-  aidan.move();
+}
+
+function spawnWalker() {
+  let john = new Walker(random(width), random(height));
+  walkerArray.push(john);
+}
+
+function keyPressed() {
+  spawnWalker();
 }
