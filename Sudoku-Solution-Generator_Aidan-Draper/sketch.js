@@ -29,7 +29,10 @@ function setup() {
   rectMode(CENTER);
 
   //loads a random sudoku
-  load();
+  for(let i=0; i<1000; i++){
+    load();
+  }
+
 
   //setting the box size in accordance with the window size
   if (width >= height) {

@@ -70,7 +70,7 @@ function spawnBall(tempX, tempY) {
   let newBall = {
     x: tempX, 
     y: tempY,
-    radius: random(25, 100),
+    radius: random(1, 10),
     dx: random(-5, 5),
     dy: random(-5, 5),
     theColor: color(random(255), random(255), random(255), random(255))

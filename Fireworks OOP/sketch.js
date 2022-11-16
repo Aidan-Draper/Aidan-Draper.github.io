@@ -30,6 +30,10 @@ class Particle {
     fill(this.color);
     circle(this.x, this.y, this.diameter);
   }
+
+  isDead() {
+    return this.alpha <= 0;
+  }
 }
 
 let theFireworks = [];
@@ -42,7 +46,12 @@ function draw() {
   background("black");
   for (let i = 0; i < theFireworks.length; i++){
     theFireworks[i].update();
-    theFireworks[i].display();
+    if (theFireworks[i].isDead()){
+      theFireworks.splice(i, 1);
+    }
+    else {
+      theFireworks[i].display();
+    }
   }
 }
 
