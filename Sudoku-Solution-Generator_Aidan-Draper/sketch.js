@@ -130,15 +130,12 @@ function load(){
 
   //generating a list of the 9 rows with each containing the numbers 1-9
   generateRandomRows(rows, unmixedList);
-  console.log(rows);//print rows array in console for easy access
 
   //obtaining the list of the 9 boxes and the numbers they each contain
   boxes = obtainBoxArrays(rows);
-  console.log(boxes);//print boxes array in console for easy access
 
   //obtaining the list of the 9 columns and the numbers they contain
   columns = obtainColumnArrays(rows);
-  console.log(columns);//print columns array in console for easy access
   
   //sort the boxes
   sortBoxes();
@@ -149,6 +146,7 @@ function load(){
   //this is purely a double check, even though the other functions will produce a perfect sudoku everytime
   //you could delete this and the isPerfect function, the only difference is that you would have to manually verify
   if (isPerfect){
+    console.log(rows);//print rows array in console for easy access
     console.log("Perfect");
   }
   else{
@@ -441,7 +439,6 @@ function swapUntilNumberFound(y, x){
 
       //if it's an infinite loop, log that it was abandoned and restart the whole process
       else{
-        console.log("abandoned");
         load();
       }
     }
