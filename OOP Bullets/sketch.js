@@ -1,23 +1,18 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+//Bullets
+//Aidan
 
 class Bullet {
-  constructor(x, y){
+  constructor(x, y, image){
     this.x = x;
     this.y = y;
     this.radius = 10;
     this.dx = 20;
-    this.theColor = "brown";
+    this.theColor = "black";
+    this.image = image;
   }
 
   display() {
-    stroke(this.theColor);
-    fill(this.theColor);
-    circle(this.x, this.y, this.radius*2);
+    image(this.image, this.x, this.y, this.image.width*0.1, this.image.height*0.1);
   }
 
   move() {
@@ -30,14 +25,21 @@ class Bullet {
 }
 
 let theBullets = [];
+let bulletImage;
+
+function preload (){
+  bulletImage = loadImage("bullet.png");
+}
 
 function setup() {
+  rectMode(CENTER);
   createCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
   background(220);
-  rect(500, 500, 50, 200);
+  fill("red");
+  rect(475, 600, 50, 200);
   for (let i = 0; i < theBullets.length; i++){
     theBullets[i].move();
     if (theBullets[i].isDead()){
@@ -51,7 +53,7 @@ function draw() {
 
 function mousePressed() {
   for (let i = 0; i< 101; i++) {
-    let someBullet = new Bullet(500, 500);
+    let someBullet = new Bullet(500, 500, bulletImage);
     theBullets.push(someBullet);
   }
 }

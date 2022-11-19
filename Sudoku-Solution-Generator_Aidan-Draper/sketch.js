@@ -31,6 +31,15 @@ function setup() {
   //loads a random sudoku
   for(let i=0; i<1000; i++){
     load();
+    //this is purely a double check, even though the other functions will produce a perfect sudoku everytime
+    //you could delete this and the isPerfect function, the only difference is that you would have to manually verify
+    if (isPerfect){
+      console.log(rows);//print rows array in console for easy access
+      console.log("Perfect");
+    }
+    else{
+      console.log("fail");
+    }
   }
 
 
@@ -142,17 +151,6 @@ function load(){
 
   //sort the columns
   sortColumns();
-
-  //this is purely a double check, even though the other functions will produce a perfect sudoku everytime
-  //you could delete this and the isPerfect function, the only difference is that you would have to manually verify
-  if (isPerfect){
-    console.log(rows);//print rows array in console for easy access
-    console.log("Perfect");
-  }
-  else{
-    console.log("fail");
-  }
-
 }
 
 
@@ -439,6 +437,7 @@ function swapUntilNumberFound(y, x){
 
       //if it's an infinite loop, log that it was abandoned and restart the whole process
       else{
+        console.log("abandoned");
         load();
       }
     }
