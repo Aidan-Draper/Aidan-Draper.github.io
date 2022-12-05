@@ -265,7 +265,7 @@ const runGame = () => {
   background("#4c4cb8");//set background
   section.classList.remove("hidden");//unhiddinng the section part of the html so that we can use it
   //Generate HTML/Create a card with each element of the card list
-  cardData.forEach((element, index) => {
+  cardData.forEach((element) => {
     //Making card with front and back face
     const card = document.createElement("div");
     const face = document.createElement("img");
